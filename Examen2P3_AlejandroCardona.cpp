@@ -34,8 +34,210 @@ int menuApuntes() {
     } while (opcion < 1 || opcion>4);
     return opcion;
 }
+
+void crearApunte() {
+    if (cursos.size() > 0) {
+        int selItem = -1;
+        listarCurso();
+        do {
+            cout << "Seleccione el índice del curso al que le desea agregar un apunte: ";
+            cin >> selItem;
+        } while (selItem<0 || selItem>cursos.size() - 1);
+        string Titulo, Contenido, Fecha;
+        cin.ignore();
+        cout << "Ingrese el título del apunte: ";
+        getline(cin, Titulo);
+        cout << "Ingrese el contenido del apunte: ";
+        getline(cin, Contenido);
+        cout << "Ingrese la fecha del apunte: ";
+        getline(cin, Fecha);
+        vector<Apunte*> temp = cursos.at(selItem)->getApuntes();
+        temp.push_back(new Apunte(Titulo, Contenido, Fecha));
+        cursos.at(selItem)->setApuntes(temp);
+
+    }
+    else
+        cout << "Considere agregar un curso primero." << endl;
+}
+void listarApuntes() {
+    if (cursos.size() > 0) {
+        int selItem = -1;
+        listarCurso();
+        do {
+            cout << "Seleccione el índice del curso del que desea listar sus apuntes: ";
+            cin >> selItem;
+        } while (selItem<0 || selItem>cursos.size() - 1);
+        int index = 0;
+        if (cursos.at(selItem)->getApuntes().size() > 0) {
+            for (Apunte* a : cursos.at(selItem)->getApuntes()) {
+                cout << ++index << ". " << a->to_string();
+            }
+        }
+        else {
+            cout << "Considere agregar mínimo un apunte al curso!" << endl;
+        }
+    }
+    else
+        cout << "Considere agregar un curso primero." << endl;
+}
+void eliminarApunte() {
+    if (cursos.size() > 0) {
+        int selItem = -1;
+        listarCurso();
+        do {
+            cout << "Seleccione el índice del curso del que desea listar sus apuntes: ";
+            cin >> selItem;
+        } while (selItem<0 || selItem>cursos.size() - 1);
+        int index = 0;
+        if (cursos.at(selItem)->getApuntes().size() > 0) {
+            for (Apunte* a : cursos.at(selItem)->getApuntes()) {
+                cout << ++index << ". " << a->to_string();
+            }
+            int selItem2 = -1;
+            do {
+                cout << "Seleccione el índice del apunte que desea eliminar: ";
+                cin >> selItem2;
+            } while (selItem2<0 || selItem2>cursos.size() - 1);
+
+            cursos.at(selItem)->deleteApunte(selItem2);
+        }
+        else {
+            cout << "Considere agregar por lo menos un apunte al curso!"<<endl;
+        }
+    }
+    else {
+        cout << "Considere agregar por lo menos un curso y un apunte a dicho curso!" << endl;
+    }
+}
+void combinarApunte() {
+    if (cursos.size() > 0) {
+        int selItem = -1;
+        listarCurso();
+        do {
+            cout << "Seleccione el índice del curso del que desea listar sus apuntes: ";
+            cin >> selItem;
+        } while (selItem<0 || selItem>cursos.size() - 1);
+        int index = 0;
+        if (cursos.at(selItem)->getApuntes().size() > 1) {
+            for (Apunte* a : cursos.at(selItem)->getApuntes()) {
+                cout << ++index << ". " << a->to_string();
+            }
+            int selItem2 = -1;
+            do {
+                cout << "Seleccione el índice del apunte que desea eliminar: ";
+                cin >> selItem2;
+            } while (selItem2<0 || selItem2>cursos.size() - 1);
+            int selItem3 = -1;
+            do {
+                cout << "Seleccione el índice del apunte que desea eliminar: ";
+                cin >> selItem3;
+            } while (selItem3<0 || selItem3>cursos.size() - 1||selItem3==selItem2);
+            vector<Apunte*>temp = cursos.at(selItem)->getApuntes();
+            temp.push_back(*(cursos.at(selItem)->getApuntes().at(selItem2))+*(cursos.at(selItem)->getApuntes().at(selItem3)));
+            cursos.at(selItem)->setApuntes(temp);
+
+        }
+        else {
+            cout << "Considere agregar mínimo un apunte al curso!" << endl;
+        }
+    }
+    else
+        cout << "Considere agregar un curso primero." << endl;
+}
+
+void opcionesApuntes() {
+    bool continuar = true;
+    while (continuar) {
+        switch (menuApuntes()) {
+        case 1:
+            crearApunte();
+            break;
+        case 2:
+            listarApuntes();
+            break;
+        case 3:
+            eliminarApunte();
+            break;
+        case 4:
+            combinarApunte();
+            break;
+        case 5:
+            continuar = false;
+        }
+    }
+}
+void crearCurso() {
+    string nombre;
+    cin.ignore();
+    cout << "Ingrese el nombre del curso: ";
+    getline(cin, nombre);
+    Curso* c = new Curso(nombre);
+    cursos.push_back(c);
+}
+void listarCurso() {
+    if (cursos.size() > 0) {
+        int index = 0;
+        for (Curso* c : cursos) {
+            cout << ++index<<". "<< c->getNombre() << endl;
+        }
+    }
+    else {
+        cout << "¡Considere agregar por lo mínimo un curso!" << endl;
+    }
+    
+}
+void eliminarCurso() {
+    if (cursos.size() > 0) {
+        listarCurso();
+        int selItem = -1;
+        do {
+            cout << "Ingrese el índice del curso a eliminar: ";
+            cin >> selItem;
+        } while (selItem<0 || selItem>cursos.size() - 1);
+        /*if (selIndex > selIndex2) {
+            delete cuerposCelestiales.at(selIndex);
+            cuerposCelestiales.erase(cuerposCelestiales.begin() + selIndex);
+            delete cuerposCelestiales.at(selIndex2);
+            cuerposCelestiales.erase(cuerposCelestiales.begin() + selIndex2);
+        }
+        else {
+            delete cursos.at(selIndex2);
+            cursos.erase(cursos.begin() + selIndex2);
+            delete cursos.at(selIndex);
+            cursos.erase(cursos.begin() + selIndex);
+        }*/
+        delete cursos.at(selItem);
+        cursos.erase(cursos.begin() + selItem);
+    }
+}
+void opcionesCursos() {
+
+    bool continuar = true;
+    while (continuar) {
+        switch (menuCursos()) {
+        case 1:
+            crearCurso();
+            break;
+        case 2:
+            listarCurso();
+            break;
+        case 3:
+            eliminarCurso();
+            break;
+        case 4:
+            continuar = false;
+        }
+    }
+
+}
 void guardarArchivo() {
 
+}
+
+void cerrarPrograma() {
+    guardarArchivo();
+    for (Curso* c : cursos)
+        delete c;
 }
 
 int main()
@@ -44,6 +246,7 @@ int main()
     while (continuar) {
         switch (menu()) {
         case 1:
+            opcionesCursos();
             break;
         case 2: 
             break;
@@ -53,7 +256,7 @@ int main()
             break;
         case 5 :
             continuar = false;
-            guardarArchivo();
+            cerrarPrograma();
             break;
         }
     }

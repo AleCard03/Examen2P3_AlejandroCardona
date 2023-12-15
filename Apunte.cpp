@@ -7,7 +7,7 @@ Apunte::Apunte(string Titulo, string Contenido, string Fecha)
 	this->Fecha = Fecha;
 
 }
-Apunte* Apunte::operator+=(Apunte nota) {
+Apunte* Apunte::operator+(Apunte nota) {
 
 	this->Titulo = this->Titulo + " + " + nota.Titulo;
 	this->Contenido += "\n" + nota.Contenido;
@@ -15,4 +15,13 @@ Apunte* Apunte::operator+=(Apunte nota) {
 	cin >> this->Fecha;
 
 	return this;
+}
+
+string Apunte::to_string()
+{
+	return "Título: "+Titulo+"\nContenido: "+Contenido+"\nFecha: "+Fecha+"\n";
+}
+
+Apunte::~Apunte()
+{
 }
