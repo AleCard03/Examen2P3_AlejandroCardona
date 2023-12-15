@@ -14,7 +14,7 @@ public:
 	void combinarDosApuntes();
 	string getNombre();
 	~Curso();
-	void guardarCurso(fstream &saveArchivo);
+	void guardarCurso(ofstream &saveArchivo);
 	vector<Apunte*> getApuntes();
 	void deleteApunte(int selItem);
 	void setApuntes(vector<Apunte*> newApuntes);

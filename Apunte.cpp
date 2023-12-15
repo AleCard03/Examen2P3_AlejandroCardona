@@ -16,7 +16,7 @@ Apunte* Apunte::operator+(const Apunte* nota) {
 	cin >> newFecha;
 	Apunte* a = new Apunte(newTitulo, newContenido, newFecha);
 	return a;
-}
+}//sobrecarga de operador
 
 string Apunte::to_string()
 {
@@ -38,7 +38,7 @@ string Apunte::getFecha()
 	return this->Fecha;
 }
 
-void Apunte::guardarApunte(fstream& saveArchivo)
+void Apunte::guardarApunte(ofstream& saveArchivo)
 {
 	saveArchivo.write(reinterpret_cast<const char*>(&(Titulo)), sizeof(Titulo));
 	saveArchivo.write(reinterpret_cast<const char*>(&(Contenido)), sizeof(Contenido));

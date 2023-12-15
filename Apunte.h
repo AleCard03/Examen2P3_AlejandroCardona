@@ -13,7 +13,7 @@ public:
 	string getTitulo();
 	string getContenido();
 	string getFecha();
-	void guardarApunte(fstream& saveArchivo);
+	void guardarApunte(ofstream& saveArchivo);
 	~Apunte();
 };
 

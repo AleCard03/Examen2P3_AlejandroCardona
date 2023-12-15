@@ -37,7 +37,7 @@ void Curso::setApuntes(vector<Apunte*> newApuntes)
 {
 	this->apuntes = newApuntes;
 }
-void Curso::guardarCurso(fstream& saveArchivo) {
+void Curso::guardarCurso(ofstream& saveArchivo) {
 	saveArchivo.write(reinterpret_cast<const char*>(apuntes.size()), sizeof(apuntes.size()));
 	saveArchivo.write(reinterpret_cast<const char*>(&(this->Nombre)), sizeof(this->Nombre));
 	for (Apunte* a : apuntes) {

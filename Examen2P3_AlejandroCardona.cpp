@@ -34,7 +34,7 @@ int menuApuntes() {
     } while (opcion < 1 || opcion>5);
     return opcion;
 }
-void listarCurso();
+void listarCurso();//prototipo de listarCurso
 void crearApunte() {
     if (cursos.size() > 0) {
         int selItem = -1;
@@ -59,7 +59,7 @@ void crearApunte() {
     }
     else
         cout << "Considere agregar un curso primero." << endl;
-}
+}//selecciona un curso y le agrega un apunte
 void listarApuntes() {
     if (cursos.size() > 0) {
         int selItem = -1;
@@ -80,7 +80,7 @@ void listarApuntes() {
     }
     else
         cout << "Considere agregar un curso primero." << endl;
-}
+}//lista apuntes de un curso
 void eliminarApunte() {
     if (cursos.size() > 0) {
         int selItem = -1;
@@ -109,7 +109,7 @@ void eliminarApunte() {
     else {
         cout << "Considere agregar por lo menos un curso y un apunte a dicho curso!" << endl;
     }
-}
+}//elimmina apunte con metodo para eliminar de vector y borrar el indice
 void combinarApunte() {
     if (cursos.size() > 0) {
         int selItem = -1;
@@ -154,7 +154,7 @@ void combinarApunte() {
     }
     else
         cout << "Considere agregar un curso primero." << endl;
-}
+}//Hace uso de operador sobrecargado para combinar Apuntes y elimina los dos usados para combinar
 
 void opcionesApuntes() {
     bool continuar = true;
@@ -185,7 +185,7 @@ void crearCurso() {
     getline(cin, nombre);
     Curso* c = new Curso(nombre);
     cursos.push_back(c);
-}
+}//Crea un curso y lo mete al vector
 void listarCurso() {
     if (cursos.size() > 0) {
         int index = 0;
@@ -197,7 +197,7 @@ void listarCurso() {
         cout << "¡Considere agregar por lo mínimo un curso!" << endl;
     }
     
-}
+}//lista los cursos en el vector
 void eliminarCurso() {
     if (cursos.size() > 0) {
         listarCurso();
@@ -213,7 +213,7 @@ void eliminarCurso() {
     else {
         cout << "Considere agregar por lo menos un curso!";
     }
-}
+}//elimina un curso del vector
 void opcionesCursos() {
 
     bool continuar = true;
@@ -236,9 +236,10 @@ void opcionesCursos() {
 }
 void guardarArchivo() {
     if (cursos.size() > 0) {
-        fstream cleanArchivo("Apuntes.rjz", ios::out);
+        ofstream cleanArchivo("Apuntes.rjz", ios::out);
         cleanArchivo.close();
-        fstream saveArchivo("Apuntes.rjz", ios::app | ios::binary);
+        ofstream saveArchivo("Apuntes.rjz", ios::out | ios::binary);
+        int x = 0;
         for (Curso* c : cursos) {
             c->guardarCurso(saveArchivo);
         }
@@ -269,6 +270,7 @@ int main()
             opcionesApuntes();
             break;
         case 3: 
+            guardarArchivo();
             break;
         case 4:
             break;
