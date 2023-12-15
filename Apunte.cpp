@@ -7,19 +7,42 @@ Apunte::Apunte(string Titulo, string Contenido, string Fecha)
 	this->Fecha = Fecha;
 
 }
-Apunte* Apunte::operator+(Apunte nota) {
+Apunte* Apunte::operator+(const Apunte* nota) {
 
-	this->Titulo = this->Titulo + " + " + nota.Titulo;
-	this->Contenido += "\n" + nota.Contenido;
+	string newTitulo = Titulo + " + " + nota->Titulo;
+	string newContenido = Contenido+" + "+nota->Contenido;
+	string newFecha;
 	cout << "Ingrese la fecha de la combinación: ";
-	cin >> this->Fecha;
-
-	return this;
+	cin >> newFecha;
+	Apunte* a = new Apunte(newTitulo, newContenido, newFecha);
+	return a;
 }
 
 string Apunte::to_string()
 {
 	return "Título: "+Titulo+"\nContenido: "+Contenido+"\nFecha: "+Fecha+"\n";
+}
+
+string Apunte::getTitulo()
+{
+	return this->Titulo;
+}
+
+string Apunte::getContenido()
+{
+	return this->Contenido;
+}
+
+string Apunte::getFecha()
+{
+	return this->Fecha;
+}
+
+void Apunte::guardarApunte(fstream& saveArchivo)
+{
+	saveArchivo.write(reinterpret_cast<const char*>(&(Titulo)), sizeof(Titulo));
+	saveArchivo.write(reinterpret_cast<const char*>(&(Contenido)), sizeof(Contenido));
+	saveArchivo.write(reinterpret_cast<const char*>(&(Fecha)), sizeof(Fecha));
 }
 
 Apunte::~Apunte()

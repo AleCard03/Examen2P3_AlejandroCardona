@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include "Apunte.h"
+#include <fstream>
 using namespace std;
 
 class Curso
@@ -13,6 +14,7 @@ public:
 	void combinarDosApuntes();
 	string getNombre();
 	~Curso();
+	void guardarCurso(fstream &saveArchivo);
 	vector<Apunte*> getApuntes();
 	void deleteApunte(int selItem);
 	void setApuntes(vector<Apunte*> newApuntes);
